@@ -1,3 +1,6 @@
+using LoginDemoServer.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace LoginDemoServer
 {
     public class Program
@@ -7,8 +10,13 @@ namespace LoginDemoServer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            //builder.Services.AddAuthorization();
             builder.Services.AddControllers();
+            #region Add Database context
+            string connectionString = builder.Configuration.GetSection("LoginDbConnectionString").Value;
+            builder.Services.AddDbContext<LoginDemoDbContext>(
+                    options => options.UseSqlServer(connectionString));
+
+            #endregion 
 
             #region Add Session
             builder.Services.AddDistributedMemoryCache();
