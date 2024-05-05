@@ -11,7 +11,9 @@ namespace LoginDemoServer.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
+        //a variable to hold a reference to the db context!
         private LoginDemoDbContext context;
+        //Use dependency injection to get the db context intot he constructor
         public LoginController(LoginDemoDbContext context)
         {
             this.context = context;

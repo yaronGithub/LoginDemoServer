@@ -11,8 +11,10 @@ namespace LoginDemoServer
 
             // Add services to the container.
             builder.Services.AddControllers();
-            #region Add Database context
+            #region Add Database context to Dependency Injection
+            //Read connection string from app settings.json
             string connectionString = builder.Configuration.GetSection("LoginDbConnectionString").Value;
+            //Add Database to dependency injection
             builder.Services.AddDbContext<LoginDemoDbContext>(
                     options => options.UseSqlServer(connectionString));
 
@@ -51,7 +53,6 @@ namespace LoginDemoServer
             app.UseSession(); //In order to enable session management
             #endregion 
 
-            //app.UseAuthorization();
             app.MapControllers();
 
             app.Run();
