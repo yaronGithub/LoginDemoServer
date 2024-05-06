@@ -25,4 +25,7 @@ public partial class User
 
     [StringLength(50)]
     public string Name { get; set; } = null!;
+
+    [InverseProperty("StudentEmailNavigation")]
+    public virtual ICollection<Grade> Grades { get; set; } = new List<Grade>();
 }

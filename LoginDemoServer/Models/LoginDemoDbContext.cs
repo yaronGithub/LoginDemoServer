@@ -15,6 +15,8 @@ public partial class LoginDemoDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Grade> Grades { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -23,9 +25,16 @@ public partial class LoginDemoDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Grade>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Grades__3214EC079D9CC80E");
+
+            entity.HasOne(d => d.StudentEmailNavigation).WithMany(p => p.Grades).HasConstraintName("FK__Grades__StudentE__412EB0B6");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Email).HasName("PK__Users__A9D105358B4E29D2");
+            entity.HasKey(e => e.Email).HasName("PK__Users__A9D10535FEFE55ED");
         });
 
         OnModelCreatingPartial(modelBuilder);
